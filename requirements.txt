@@ -1,0 +1,7 @@
+Python 3.6
+numpy 1.15.2
+scikit-image 0.14.0
+python-opencv PIL 5.2.0
+PyTorch 0.4.0
+torchvision 0.2.1
+glob

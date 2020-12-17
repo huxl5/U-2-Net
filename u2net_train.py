@@ -60,7 +60,7 @@ label_ext = '.png'
 model_dir = os.path.join(os.getcwd(), 'saved_models', model_name + os.sep)
 
 epoch_num = 100000
-batch_size_train = 12
+batch_size_train = 2
 batch_size_val = 1
 train_num = 0
 val_num = 0
@@ -147,8 +147,10 @@ for epoch in range(0, epoch_num):
         optimizer.step()
 
         # # print statistics
-        running_loss += loss.data[0]
-        running_tar_loss += loss2.data[0]
+        # running_loss += loss.data[0]
+        running_loss += loss.item()
+        # running_tar_loss += loss2.data[0]
+        running_tar_loss += loss2.item()
 
         # del temporary outputs and loss
         del d0, d1, d2, d3, d4, d5, d6, loss2, loss

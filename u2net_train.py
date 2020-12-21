@@ -106,7 +106,7 @@ elif(model_name=='u2netp'):
 if torch.cuda.is_available():
     net.cuda()
     # pytorch禁用cudnn
-    torch.backends.cudnn.benchmark = False
+    # torch.backends.cudnn.benchmark = False
 
 # ------- 4. define optimizer --------
 print("---define optimizer...")

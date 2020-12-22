@@ -12,6 +12,7 @@ from torchvision import transforms#, utils
 import numpy as np
 from PIL import Image
 import glob
+import traceback
 
 from data_loader import RescaleT
 from data_loader import ToTensor
@@ -92,30 +93,35 @@ def main():
     net.eval()
 
     # --------- 4. inference for each image ---------
+    error = []
     for i_test, data_test in enumerate(test_salobj_dataloader):
+        try:
+            print("inferencing:",img_name_list[i_test].split(os.sep)[-1])
 
-        print("inferencing:",img_name_list[i_test].split(os.sep)[-1])
+            inputs_test = data_test['image']
+            inputs_test = inputs_test.type(torch.FloatTensor)
 
-        inputs_test = data_test['image']
-        inputs_test = inputs_test.type(torch.FloatTensor)
+            if torch.cuda.is_available():
+                inputs_test = Variable(inputs_test.cuda())
+            else:
+                inputs_test = Variable(inputs_test)
 
-        if torch.cuda.is_available():
-            inputs_test = Variable(inputs_test.cuda())
-        else:
-            inputs_test = Variable(inputs_test)
+            d1,d2,d3,d4,d5,d6,d7= net(inputs_test)
 
-        d1,d2,d3,d4,d5,d6,d7= net(inputs_test)
+            # normalization
+            pred = d1[:,0,:,:]
+            pred = normPRED(pred)
 
-        # normalization
-        pred = d1[:,0,:,:]
-        pred = normPRED(pred)
+            # save results to test_results folder
+            if not os.path.exists(prediction_dir):
+                os.makedirs(prediction_dir, exist_ok=True)
+            save_output(img_name_list[i_test],pred,prediction_dir)
 
-        # save results to test_results folder
-        if not os.path.exists(prediction_dir):
-            os.makedirs(prediction_dir, exist_ok=True)
-        save_output(img_name_list[i_test],pred,prediction_dir)
-
-        del d1,d2,d3,d4,d5,d6,d7
+            del d1,d2,d3,d4,d5,d6,d7
+        except  Exception as ex:
+            traceback.print_exc()
+            error.append(img_name_list[i_test].split(os.sep)[-1])
+    print('异常数据：',error)
 
 if __name__ == "__main__":
     main()

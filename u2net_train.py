@@ -49,7 +49,7 @@ def muti_bce_loss_fusion(d0, d1, d2, d3, d4, d5, d6, labels_v):
 
 model_name = 'u2net' #'u2netp'
 
-data_dir = os.path.join('/nfs/project/huxiaoliang/data/ImageMatting/DUTS-TR' + os.sep)
+data_dir = os.path.join('/nfs/private/datasets/DUTS-TR' + os.sep)
 # tra_image_dir = os.path.join('DUTS', 'DUTS-TR', 'DUTS-TR', 'im_aug' + os.sep)
 # tra_label_dir = os.path.join('DUTS', 'DUTS-TR', 'DUTS-TR', 'gt_aug' + os.sep)
 tra_image_dir = os.path.join('DUTS-TR-Image' + os.sep)
@@ -168,4 +168,3 @@ for epoch in range(0, epoch_num):
             running_tar_loss = 0.0
             net.train()  # resume train
             ite_num4val = 0
-

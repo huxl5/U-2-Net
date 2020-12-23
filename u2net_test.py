@@ -56,14 +56,11 @@ def main():
 
     # --------- 1. get image path and name ---------
     model_name='u2net'#u2netp
-
-
-
-    # image_dir = os.path.join(os.getcwd(), 'test_data', 'test_images')
-    # prediction_dir = os.path.join(os.getcwd(), 'test_data', model_name + '_results' + os.sep)
-    image_dir = os.path.join('/nfs/project/huxiaoliang/data/white_or_not/white_bg_image')
-    prediction_dir = os.path.join('/nfs/project/huxiaoliang/data/white_or_not/white_bg_image_pred'+ os.sep)
-    model_dir = os.path.join('/nfs/project/huxiaoliang/data/ImageMatting', 'u2net-saved_models', model_name, model_name + '.pth')
+    image_dir = os.path.join(os.getcwd(), 'test_data', 'test_images')
+    prediction_dir = os.path.join(os.getcwd(), 'test_data', model_name + '_results' + os.sep)
+    # image_dir = os.path.join('/nfs/project/huxiaoliang/data/white_or_not/white_bg_image')
+    # prediction_dir = os.path.join('/nfs/project/huxiaoliang/data/white_or_not/white_bg_image_pred'+ os.sep)
+    model_dir = os.path.join('/nfs/private/modelfiles/u2net-saved_models', model_name, model_name + '.pth')
 
     img_name_list = glob.glob(image_dir + os.sep + '*')
     print(img_name_list)

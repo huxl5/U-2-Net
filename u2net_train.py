@@ -49,16 +49,20 @@ def muti_bce_loss_fusion(d0, d1, d2, d3, d4, d5, d6, labels_v):
 
 model_name = 'u2net' #'u2netp'
 
-data_dir = os.path.join('/nfs/private/datasets/DUTS-TR' + os.sep)
-# tra_image_dir = os.path.join('DUTS', 'DUTS-TR', 'DUTS-TR', 'im_aug' + os.sep)
-# tra_label_dir = os.path.join('DUTS', 'DUTS-TR', 'DUTS-TR', 'gt_aug' + os.sep)
-tra_image_dir = os.path.join('DUTS-TR-Image' + os.sep)
-tra_label_dir = os.path.join('DUTS-TR-Mask' + os.sep)
+# data_dir = os.path.join('/nfs/private/datasets/DUTS-TR' + os.sep)
+# tra_image_dir = os.path.join('DUTS-TR-Image' + os.sep)
+# tra_label_dir = os.path.join('DUTS-TR-Mask' + os.sep)
+data_dir = os.path.join('/nfs/volume-821-5/huxiaoliang/synthesis_segment_datase_no_bg_blur' + os.sep)
+# tra_image_dir = os.path.join('img' + os.sep)
+# tra_label_dir = os.path.join('img_mask' + os.sep)
+tra_image_dir = os.path.join('test_img' + os.sep)
+tra_label_dir = os.path.join('test_img_mask' + os.sep)
 
 image_ext = '.jpg'
 label_ext = '.png'
 
-model_dir = os.path.join(os.getcwd(), 'saved_models', model_name + os.sep)
+model_dir = os.path.join('/nfs/volume-821-5/huxiaoliang/modelfiles/u2net-saved_models', model_name + os.sep)
+model_path = os.path.join(model_dir,model_name + '.pth')
 
 epoch_num = 100000
 batch_size_train = 2
@@ -67,6 +71,8 @@ train_num = 0
 val_num = 0
 
 tra_img_name_list = glob.glob(data_dir + tra_image_dir + '*' + image_ext)
+print(data_dir + tra_image_dir + '*' + image_ext)
+print(len(tra_img_name_list))
 
 tra_lbl_name_list = []
 for img_path in tra_img_name_list:
@@ -105,6 +111,8 @@ elif(model_name=='u2netp'):
 
 if torch.cuda.is_available():
     net.cuda()
+    net.load_state_dict(torch.load(model_path))
+    print('---GPU training---')
     # pytorch禁用cudnn
     # torch.backends.cudnn.benchmark = False
 

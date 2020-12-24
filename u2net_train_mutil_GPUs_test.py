@@ -157,7 +157,7 @@ def load_pretrainedmodel(model_path, model_):
 if USE_CUDA:
     net = nn.DataParallel(net,device_ids=[0,1,2,3])
     net.to(device)
-    # net.load_state_dict(torch.load(model_path))
+    net.load_state_dict(torch.load(model_path))
     # net = load_pretrainedmodel(model_path, net)
     # logging.info('---GPUs training---')
     # net.cuda()
